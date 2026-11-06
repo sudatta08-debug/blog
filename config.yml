@@ -1,0 +1,170 @@
+# Admin panel (Sveltia CMS) configuration
+# Docs: https://sveltiacms.app/en/docs
+
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME   # <-- change this after you create the repo
+  branch: main
+  commit_messages:
+    create: 'New post: {{slug}}'
+    update: 'Update {{collection}}: {{slug}}'
+    delete: 'Delete {{collection}}: {{slug}}'
+    uploadMedia: 'Upload {{path}}'
+    deleteMedia: 'Delete {{path}}'
+
+site_url: https://sudatta-blog.netlify.app
+display_url: https://sudatta-blog.netlify.app
+logo_url: /favicon.svg
+
+media_folder: public/uploads
+public_folder: /uploads
+
+# Shrink and convert uploaded photos to WebP so pages load fast (good for SEO)
+media_libraries:
+  default:
+    config:
+      max_file_size: 10000000
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1800
+          height: 1800
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    description: Your blog posts. Drafts stay hidden until you untick "Draft".
+    folder: src/content/posts
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    identifier_field: title
+    summary: '{{title}}  ({{pubDate | date("DD MMM YYYY")}})'
+    sortable_fields:
+      fields: [pubDate, title]
+      default:
+        field: pubDate
+        direction: descending
+    view_filters:
+      - label: Drafts
+        field: draft
+        pattern: true
+      - label: Published
+        field: draft
+        pattern: false
+    preview_path: blog/{{slug}}/
+    fields:
+      - { label: Title, name: title, widget: string, hint: 'The headline readers see on the page.' }
+      - label: Short description
+        name: description
+        widget: text
+        required: false
+        maxlength: 200
+        hint: 'One or two sentences shown under the title and on the home page. Also used for Google if the SEO description is empty.'
+      - { label: Publish date, name: pubDate, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD MMM YYYY', time_format: false }
+      - { label: Last updated, name: updatedDate, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD MMM YYYY', time_format: false, required: false, hint: 'Set this when you make a big update. Google likes fresh content.' }
+      - { label: Cover image, name: cover, widget: image, required: false, hint: 'Shown at the top of the post and when shared on WhatsApp or LinkedIn. Wide images (16:9) work best.' }
+      - { label: Cover image description (alt text), name: coverAlt, widget: string, required: false, hint: 'Describe the image in a few words for screen readers and Google Images.' }
+      - label: Topics
+        name: tags
+        widget: list
+        required: false
+        allow_add: true
+        hint: 'Type a topic and press Enter. Use the same spelling every time, 1–5 per post.'
+      - { label: Feature on home page, name: featured, widget: boolean, default: false, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: true, hint: 'Untick to publish.' }
+      - { label: Body, name: body, widget: markdown, hint: 'Use Heading 2 for main sections. Link to your other posts where it helps.' }
+      - label: SEO
+        name: seo
+        widget: object
+        collapsed: false
+        required: false
+        summary: '{{fields.focusKeyword}}'
+        hint: 'Helps Google understand and show this post. Check your scores at /admin/seo/ on the live site.'
+        fields:
+          - label: Focus keyword
+            name: focusKeyword
+            widget: string
+            required: false
+            hint: 'The phrase people would type into Google to find this post, e.g. "how to save tax as a freelancer". Use it in the title, the first paragraph and the description.'
+          - label: Search title
+            name: title
+            widget: string
+            required: false
+            minlength: 30
+            maxlength: 60
+            hint: 'The blue link on Google. 30–60 characters. Leave empty to use the post title.'
+          - label: Meta description
+            name: description
+            widget: text
+            required: false
+            minlength: 120
+            maxlength: 160
+            hint: 'The grey text under the link on Google. 120–160 characters. Make people want to click.'
+          - label: Social share image
+            name: ogImage
+            widget: image
+            required: false
+            hint: 'Optional. Overrides the cover image when shared. 1200 × 630 px is ideal.'
+          - label: Canonical URL
+            name: canonical
+            widget: string
+            required: false
+            hint: 'Only if this post was first published on another website. Paste that URL here so Google credits the original.'
+          - label: Hide from search engines
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+            hint: 'Tick to keep this post off Google (it still shows on your blog).'
+      - { label: Old Blogspot address, name: bloggerUrl, widget: string, required: false, hint: 'Filled in automatically for migrated posts. Leave as is.' }
+
+  - name: pages
+    label: Pages
+    files:
+      - name: about
+        label: About
+        file: src/content/pages/about.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Description for Google, name: description, widget: text, maxlength: 160 }
+          - { label: Body, name: body, widget: markdown }
+
+  - name: settings
+    label: Site settings
+    editor:
+      preview: false
+    files:
+      - name: site
+        label: Site settings
+        file: src/data/settings.json
+        format: json
+        fields:
+          - { label: Site title, name: siteTitle, widget: string }
+          - { label: Tagline, name: tagline, widget: string, hint: 'Shown large on the home page.' }
+          - { label: Site description, name: siteDescription, widget: text, maxlength: 160, hint: 'Used by Google for your home page. 120–160 characters.' }
+          - { label: Site address, name: siteUrl, widget: string, hint: 'Your live address, e.g. https://yourname.netlify.app. Change it when you add your own domain.' }
+          - { label: Author name, name: authorName, widget: string }
+          - { label: Short bio, name: authorBio, widget: text, hint: 'Shown on the home page and under every post.' }
+          - { label: Language code, name: language, widget: string, hint: 'en-IN for English (India).' }
+          - { label: Locale, name: locale, widget: string }
+          - { label: Default share image, name: defaultOgImage, widget: image, hint: 'Used when a page has no cover image. 1200 × 630 px.' }
+          - { label: Posts per page, name: postsPerPage, widget: number, value_type: int, min: 3, max: 50 }
+          - { label: Google Search Console code, name: googleSiteVerification, widget: string, required: false, hint: 'From Search Console → Add property → HTML tag. Paste only the content="…" value.' }
+          - { label: Bing Webmaster code, name: bingSiteVerification, widget: string, required: false }
+          - { label: Google Analytics ID, name: googleAnalyticsId, widget: string, required: false, hint: 'Starts with G-. Leave empty to turn analytics off.' }
+          - label: Social links
+            name: social
+            widget: object
+            fields:
+              - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+              - { label: X username, name: twitter, widget: string, required: false }
+              - { label: Instagram URL, name: instagram, widget: string, required: false }
+              - { label: Email, name: email, widget: string, required: false }

@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import settings from '../data/settings.json';
+import { getPosts, excerpt, formatDate, readingTime } from '../lib/posts';
+
+const posts = await getPosts();
+const featured = posts.find((p) => p.data.featured) ?? null;
+const rest = posts.filter((p) => p !== featured);
+const per = settings.postsPerPage;
+const first = rest.slice(0, per);
+const hasMore = rest.length > per;
+---
+
+<Base title={settings.siteTitle} description={settings.siteDescription} next={hasMore ? '/page/2/' : undefined}>
+  <div class="wrap">
+    <section class="intro">
+      <p>{settings.tagline}.</p>
+      <p>{settings.authorBio}</p>
+    </section>
+
+    {
+      featured && (
+        <article class="featured">
+          {featured.data.cover && (
+            <a href={`/blog/${featured.id}/`} tabindex="-1" aria-hidden="true">
+              <img src={featured.data.cover} alt={featured.data.coverAlt || ''} width="1200" height="750" />
+            </a>
+          )}
+          <div>
+            <p class="kicker">Start here</p>
+            <h2>
+              <a href={`/blog/${featured.id}/`}>{featured.data.title}</a>
+            </h2>
+            <p>{excerpt(featured, 220)}</p>
+            <div class="meta">
+              <time datetime={featured.data.pubDate.toISOString()}>{formatDate(featured.data.pubDate)}</time>
+              <span>{readingTime(featured.body)} min read</span>
+            </div>
+          </div>
+        </article>
+      )
+    }
+
+    {posts.length === 0 && <p class="empty">No posts yet. Open <a href="/admin/">/admin</a> to write your first one.</p>}
+
+    <PostList posts={first} />
+
+    {hasMore && (
+      <nav class="pager" aria-label="More posts">
+        <span />
+        <a href="/page/2/">Older posts</a>
+      </nav>
+    )}
+  </div>
+</Base>

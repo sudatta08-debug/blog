@@ -1,0 +1,97 @@
+---
+import settings from '../data/settings.json';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string | null;
+  imageAlt?: string | null;
+  canonical?: string | null;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  published?: Date;
+  modified?: Date | null;
+  tags?: string[];
+  jsonLd?: Record<string, unknown>[];
+  prev?: string;
+  next?: string;
+}
+
+const {
+  title,
+  description = settings.siteDescription,
+  image,
+  imageAlt,
+  canonical,
+  noindex = false,
+  type = 'website',
+  published,
+  modified,
+  tags = [],
+  jsonLd = [],
+  prev,
+  next,
+} = Astro.props;
+
+const site = Astro.site ?? new URL(settings.siteUrl);
+const canonicalURL = canonical ? new URL(canonical, site).href : new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image || settings.defaultOgImage, site).href;
+const fullTitle = title === settings.siteTitle ? title : `${title} | ${settings.siteTitle}`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+<meta name="author" content={settings.authorName} />
+<meta name="generator" content={Astro.generator} />
+{prev && <link rel="prev" href={prev} />}
+{next && <link rel="next" href={next} />}
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="alternate" type="application/rss+xml" title={settings.siteTitle} href={new URL('/rss.xml', site)} />
+<meta name="theme-color" content="#fafaf7" />
+
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={settings.siteTitle} />
+<meta property="og:locale" content={settings.locale} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImage} />
+{imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+{published && <meta property="article:published_time" content={published.toISOString()} />}
+{modified && <meta property="article:modified_time" content={modified.toISOString()} />}
+{type === 'article' && <meta property="article:author" content={settings.authorName} />}
+{tags.map((t) => <meta property="article:tag" content={t} />)}
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+{settings.social.twitter && <meta name="twitter:site" content={'@' + settings.social.twitter.replace(/^@/, '')} />}
+
+<!-- Search console ownership -->
+{settings.googleSiteVerification && <meta name="google-site-verification" content={settings.googleSiteVerification} />}
+{settings.bingSiteVerification && <meta name="msvalidate.01" content={settings.bingSiteVerification} />}
+
+{jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+
+{
+  settings.googleAnalyticsId && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${settings.googleAnalyticsId}`} />
+      <script is:inline define:vars={{ id: settings.googleAnalyticsId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', id);
+      </script>
+    </>
+  )
+}

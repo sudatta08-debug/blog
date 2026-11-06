@@ -1,0 +1,42 @@
+---
+import { excerpt, formatDate, readingTime, slugify, type Post } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+  headingLevel?: 'h2' | 'h3';
+}
+const { posts } = Astro.props;
+
+const groups = new Map<number, Post[]>();
+for (const p of posts) {
+  const y = p.data.pubDate.getFullYear();
+  if (!groups.has(y)) groups.set(y, []);
+  groups.get(y)!.push(p);
+}
+---
+
+{
+  [...groups.entries()].map(([year, list]) => (
+    <section class="year-group" aria-labelledby={`y-${year}`}>
+      <h2 class="year" id={`y-${year}`}>{year}</h2>
+      <ul class="post-list">
+        {list.map((p) => (
+          <li class="post-item">
+            <h3>
+              <a href={`/blog/${p.id}/`}>{p.data.title}</a>
+            </h3>
+            <p>{excerpt(p)}</p>
+            <div class="meta">
+              <time datetime={p.data.pubDate.toISOString()}>{formatDate(p.data.pubDate)}</time>
+              <span>{readingTime(p.body)} min read</span>
+              {p.data.tags.slice(0, 3).map((t) => (
+                <a href={`/tags/${slugify(t)}/`}>{t}</a>
+              ))}
+              {p.data.draft && <strong>Draft</strong>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))
+}

@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import settings from '../data/settings.json';
+
+import type { ComponentProps } from 'astro/types';
+type Props = ComponentProps<typeof SEO>;
+
+const props = Astro.props;
+const path = Astro.url.pathname;
+const site = Astro.site ?? new URL(settings.siteUrl);
+
+const nav = [
+  { href: '/', label: 'Writing' },
+  { href: '/tags/', label: 'Topics' },
+  { href: '/about/', label: 'About' },
+];
+const isCurrent = (href: string) => (href === '/' ? path === '/' || path.startsWith('/page/') || path.startsWith('/blog/') : path.startsWith(href));
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: settings.siteTitle,
+  url: site.href,
+  description: settings.siteDescription,
+  inLanguage: settings.language,
+  author: { '@type': 'Person', name: settings.authorName },
+};
+const social = settings.social;
+const links = [
+  social.linkedin && { href: social.linkedin, label: 'LinkedIn' },
+  social.twitter && { href: `https://x.com/${social.twitter.replace(/^@/, '')}`, label: 'X' },
+  social.instagram && { href: social.instagram, label: 'Instagram' },
+  social.email && { href: `mailto:${social.email}`, label: 'Email' },
+].filter(Boolean) as { href: string; label: string }[];
+---
+
+<!doctype html>
+<html lang={settings.language}>
+  <head>
+    <SEO {...props} jsonLd={[...(path === '/' ? [websiteLd] : []), ...(props.jsonLd || [])]} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">{settings.siteTitle}</a>
+        <nav class="nav" aria-label="Main">
+          {nav.map((n) => <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>© {new Date().getFullYear()} {settings.authorName}</span>
+        <nav aria-label="Footer">
+          {links.map((l) => <a href={l.href} rel="me noopener">{l.label}</a>)}
+          <a href="/rss.xml">RSS</a>
+          <a href="/sitemap-index.xml">Sitemap</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
