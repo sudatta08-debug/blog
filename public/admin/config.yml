@@ -147,6 +147,17 @@ collections:
         file: src/data/settings.json
         format: json
         fields:
+          - label: Theme
+            name: theme
+            widget: select
+            default: classic
+            required: false
+            options:
+              - { label: 'Classic: clean list, marigold accent', value: classic }
+              - { label: 'Magazine: picture grid, teal accent', value: magazine }
+              - { label: 'Journal: soft and centred, plum accent', value: journal }
+              - { label: 'Night: dark mode, saffron accent', value: night }
+            hint: 'Changes the look of the whole site. Publish, then refresh your site after about a minute.'
           - { label: Site title, name: siteTitle, widget: string }
           - { label: Tagline, name: tagline, widget: string, hint: 'Shown large on the home page.' }
           - { label: Site description, name: siteDescription, widget: text, maxlength: 160, hint: 'Used by Google for your home page. 120–160 characters.' }

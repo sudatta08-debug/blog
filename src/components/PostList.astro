@@ -3,7 +3,6 @@ import { excerpt, formatDate, readingTime, slugify, type Post } from '../lib/pos
 
 interface Props {
   posts: Post[];
-  headingLevel?: 'h2' | 'h3';
 }
 const { posts } = Astro.props;
 
@@ -15,28 +14,38 @@ for (const p of posts) {
 }
 ---
 
-{
-  [...groups.entries()].map(([year, list]) => (
-    <section class="year-group" aria-labelledby={`y-${year}`}>
-      <h2 class="year" id={`y-${year}`}>{year}</h2>
-      <ul class="post-list">
-        {list.map((p) => (
-          <li class="post-item">
-            <h3>
-              <a href={`/blog/${p.id}/`}>{p.data.title}</a>
-            </h3>
-            <p>{excerpt(p)}</p>
-            <div class="meta">
-              <time datetime={p.data.pubDate.toISOString()}>{formatDate(p.data.pubDate)}</time>
-              <span>{readingTime(p.body)} min read</span>
-              {p.data.tags.slice(0, 3).map((t) => (
-                <a href={`/tags/${slugify(t)}/`}>{t}</a>
-              ))}
-              {p.data.draft && <strong>Draft</strong>}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
-  ))
-}
+<div class="post-groups">
+  {
+    [...groups.entries()].map(([year, list]) => (
+      <section class="year-group" aria-labelledby={`y-${year}`}>
+        <h2 class="year" id={`y-${year}`}>{year}</h2>
+        <ul class="post-list">
+          {list.map((p) => (
+            <li class="post-item">
+              {p.data.cover && (
+                <a class="thumb" href={`/blog/${p.id}/`} tabindex="-1" aria-hidden="true">
+                  <img src={p.data.cover} alt="" loading="lazy" width="800" height="500" />
+                </a>
+              )}
+              <div class="post-text">
+                {p.data.tags[0] && <a class="post-topic" href={`/tags/${slugify(p.data.tags[0])}/`}>{p.data.tags[0]}</a>}
+                <h3>
+                  <a href={`/blog/${p.id}/`}>{p.data.title}</a>
+                </h3>
+                <p>{excerpt(p)}</p>
+                <div class="meta">
+                  <time datetime={p.data.pubDate.toISOString()}>{formatDate(p.data.pubDate)}</time>
+                  <span>{readingTime(p.body)} min read</span>
+                  {p.data.tags.slice(0, 3).map((t) => (
+                    <a class="meta-tag" href={`/tags/${slugify(t)}/`}>{t}</a>
+                  ))}
+                  {p.data.draft && <strong>Draft</strong>}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>

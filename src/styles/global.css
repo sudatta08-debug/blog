@@ -117,6 +117,7 @@ img { max-width: 100%; height: auto; display: block; }
 .post-item h3 a { color: var(--ink); text-decoration: none; }
 .post-item h3 a:hover { text-decoration: underline; text-decoration-color: var(--marigold); text-decoration-thickness: 3px; }
 .post-item p { margin: 0.45rem 0 0; color: var(--slate); max-width: 60ch; }
+.post-item .thumb, .post-item .post-topic { display: none; }
 .meta {
   font-family: var(--sans); font-size: var(--s-1); color: var(--slate);
   display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; margin-top: 0.55rem;

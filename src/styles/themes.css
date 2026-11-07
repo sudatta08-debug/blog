@@ -1,0 +1,176 @@
+/* Theme options. Pick one in Admin > Site settings > Theme.
+   "classic" uses global.css as is; the others override it here. */
+
+@import '@fontsource/outfit/500.css';
+@import '@fontsource/outfit/700.css';
+@import '@fontsource/source-serif-4/400.css';
+@import '@fontsource/source-serif-4/400-italic.css';
+@import '@fontsource/source-serif-4/600.css';
+@import '@fontsource/young-serif/400.css';
+@import '@fontsource/nunito-sans/400.css';
+@import '@fontsource/nunito-sans/400-italic.css';
+@import '@fontsource/nunito-sans/700.css';
+@import '@fontsource/sora/500.css';
+@import '@fontsource/sora/600.css';
+@import '@fontsource/newsreader/400.css';
+@import '@fontsource/newsreader/400-italic.css';
+@import '@fontsource/newsreader/600.css';
+
+/* =========================================================
+   MAGAZINE: image-led grid, teal accent, Outfit + Source Serif
+   ========================================================= */
+html[data-theme='magazine'] {
+  --paper: #f5f6f4;
+  --ink: #16232b;
+  --slate: #56636b;
+  --rule: #dfe3e0;
+  --marigold: #0e6e6e;
+  --marigold-soft: #d5ecea;
+  --link: #0e6e6e;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --serif: 'Source Serif 4', Georgia, serif;
+  --wide: 72rem;
+}
+[data-theme='magazine'] h1, [data-theme='magazine'] h2, [data-theme='magazine'] h3 { font-weight: 700; letter-spacing: -0.015em; }
+[data-theme='magazine'] .site-header { background: #fff; }
+[data-theme='magazine'] .brand { font-size: 1.4rem; font-weight: 700; }
+[data-theme='magazine'] .intro { padding-block: 3rem 2rem; }
+[data-theme='magazine'] .intro p { font-family: var(--sans); font-weight: 500; font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem); line-height: 1.2; max-width: 22ch; letter-spacing: -0.02em; }
+[data-theme='magazine'] .intro p + p { font-family: var(--serif); font-weight: 400; font-size: var(--s0); line-height: 1.6; letter-spacing: 0; max-width: 52ch; }
+
+[data-theme='magazine'] .featured {
+  grid-template-columns: 1.5fr 1fr; gap: 0; background: #fff; border-radius: 14px; overflow: hidden;
+  padding: 0; margin-bottom: 3rem; border: 1px solid var(--rule);
+}
+[data-theme='magazine'] .featured > a { display: block; height: 100%; }
+[data-theme='magazine'] .featured img { border-radius: 0; height: 100%; aspect-ratio: 16 / 10; }
+[data-theme='magazine'] .featured > div { padding: 2.2rem; }
+[data-theme='magazine'] .featured .kicker { color: var(--link); font-weight: 600; }
+
+[data-theme='magazine'] .post-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.8rem; }
+[data-theme='magazine'] .year-group, [data-theme='magazine'] .post-list { display: contents; }
+[data-theme='magazine'] .year { display: none; }
+[data-theme='magazine'] .post-item { padding: 0; display: flex; flex-direction: column; }
+[data-theme='magazine'] .post-item .thumb { display: block; margin-bottom: 1rem; }
+[data-theme='magazine'] .post-item .thumb img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 10px; background: var(--rule); }
+[data-theme='magazine'] .post-item .post-topic { display: inline-block; font-family: var(--sans); font-size: 0.85rem; font-weight: 600; color: var(--link); text-decoration: none; margin-bottom: 0.35rem; }
+[data-theme='magazine'] .post-item h3 { font-size: 1.3rem; line-height: 1.25; }
+[data-theme='magazine'] .post-item p { font-size: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+[data-theme='magazine'] .post-item .meta-tag { display: none; }
+[data-theme='magazine'] .tag-cloud a, [data-theme='magazine'] .share a, [data-theme='magazine'] .share button { border-radius: 8px; }
+[data-theme='magazine'] .cover img, [data-theme='magazine'] .prose img { border-radius: 12px; }
+[data-theme='magazine'] .article-head { text-align: left; }
+
+/* =========================================================
+   JOURNAL: soft, personal, centred; plum accent, Young Serif + Nunito Sans
+   ========================================================= */
+html[data-theme='journal'] {
+  --paper: #f6f3f7;
+  --ink: #2b2533;
+  --slate: #6d6577;
+  --rule: #e6dfea;
+  --marigold: #8a3d6b;
+  --marigold-soft: #f1e1ec;
+  --link: #8a3d6b;
+  --sans: 'Nunito Sans', system-ui, sans-serif;
+  --serif: 'Nunito Sans', system-ui, sans-serif;
+  --display: 'Young Serif', Georgia, serif;
+  --measure: 42rem;
+  --wide: 56rem;
+}
+[data-theme='journal'] body { line-height: 1.75; }
+[data-theme='journal'] h1, [data-theme='journal'] h2, [data-theme='journal'] h3 { font-family: var(--display); font-weight: 400; letter-spacing: -0.01em; }
+[data-theme='journal'] .site-header { border-bottom: 0; }
+[data-theme='journal'] .site-header .wrap { flex-direction: column; gap: 0.6rem; padding-block: 2rem 0.5rem; }
+[data-theme='journal'] .brand { font-family: var(--display); font-weight: 400; font-size: 1.9rem; }
+[data-theme='journal'] .nav { gap: 0.4rem; }
+[data-theme='journal'] .nav a { padding: 0.3rem 0.9rem; border-radius: 999px; text-decoration: none; }
+[data-theme='journal'] .nav a[aria-current='page'], [data-theme='journal'] .nav a:hover { background: var(--marigold-soft); color: var(--ink); text-decoration: none; }
+[data-theme='journal'] .intro { text-align: center; padding-block: 2.5rem 3rem; }
+[data-theme='journal'] .intro p { font-family: var(--display); margin-inline: auto; max-width: 26ch; font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.2rem); line-height: 1.3; }
+[data-theme='journal'] .intro p + p { font-family: var(--sans); font-size: 1.05rem; max-width: 48ch; }
+
+[data-theme='journal'] .featured { background: #fff; border-radius: 22px; padding: 1.2rem; border: 1px solid var(--rule); margin-bottom: 3rem; gap: 2rem; }
+[data-theme='journal'] .featured img { border-radius: 14px; }
+[data-theme='journal'] .featured .kicker { display: inline-block; background: var(--marigold-soft); color: var(--link); border-radius: 999px; padding: 0.15rem 0.7rem; font-weight: 700; }
+
+[data-theme='journal'] .post-groups { max-width: var(--wide); margin-inline: auto; }
+[data-theme='journal'] .year-group { display: block; border-top: 0; padding-top: 0; margin-top: 2.5rem; }
+[data-theme='journal'] .year { position: static; text-align: center; font-family: var(--display); font-weight: 400; font-size: 1.3rem; letter-spacing: 0; color: var(--link); margin-bottom: 1.2rem; }
+[data-theme='journal'] .year::before, [data-theme='journal'] .year::after { content: '~'; margin: 0 0.6rem; color: var(--rule); }
+[data-theme='journal'] .post-list { display: grid; gap: 1rem; }
+[data-theme='journal'] .post-item { display: grid; grid-template-columns: 11rem 1fr; gap: 1.4rem; align-items: center; background: #fff; border: 1px solid var(--rule); border-radius: 18px; padding: 1rem; }
+[data-theme='journal'] .post-item:not(:has(.thumb)) { grid-template-columns: 1fr; }
+[data-theme='journal'] .post-item .thumb { display: block; }
+[data-theme='journal'] .post-item .thumb img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--rule); }
+[data-theme='journal'] .post-item h3 { font-size: 1.35rem; }
+[data-theme='journal'] .post-item p { font-size: 1rem; }
+[data-theme='journal'] .post-item .meta-tag { background: var(--marigold-soft); border-radius: 999px; padding: 0 0.6rem; text-decoration: none; color: var(--link); }
+[data-theme='journal'] .article-head { text-align: center; }
+[data-theme='journal'] .article-head .meta { justify-content: center; }
+[data-theme='journal'] .cover img, [data-theme='journal'] .prose img { border-radius: 18px; }
+[data-theme='journal'] .toc { background: #fff; border: 1px solid var(--rule); border-left: 4px solid var(--marigold); border-radius: 12px; padding: 1rem 1.2rem; }
+[data-theme='journal'] .author-box { border-radius: 18px; }
+[data-theme='journal'] .prose blockquote { border-left-color: var(--marigold); font-family: var(--display); font-style: normal; }
+[data-theme='journal'] .page-head { text-align: center; }
+[data-theme='journal'] .page-head p { margin-inline: auto; }
+[data-theme='journal'] .tag-cloud { justify-content: center; }
+
+/* =========================================================
+   NIGHT: dark reading room, saffron accent, Sora + Newsreader
+   ========================================================= */
+html[data-theme='night'] {
+  --paper: #12151c;
+  --surface: #1a1f29;
+  --ink: #ece8e1;
+  --slate: #a3a9b5;
+  --rule: #2a303c;
+  --marigold: #f2b33d;
+  --marigold-soft: rgba(242, 179, 61, 0.16);
+  --link: #f2c66d;
+  --sans: 'Sora', system-ui, sans-serif;
+  --serif: 'Newsreader', Georgia, serif;
+  color-scheme: dark;
+}
+[data-theme='night'] body { font-size: 1.2rem; }
+[data-theme='night'] h1, [data-theme='night'] h2, [data-theme='night'] h3 { font-weight: 600; letter-spacing: -0.02em; }
+[data-theme='night'] ::selection { background: rgba(242, 179, 61, 0.35); }
+[data-theme='night'] .intro p { font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.5rem); line-height: 1.25; max-width: 24ch; }
+[data-theme='night'] .featured { background: var(--surface); border-radius: 12px; padding: 1.4rem; margin-bottom: 2rem; }
+[data-theme='night'] .featured img { border-radius: 8px; }
+[data-theme='night'] .year { color: var(--rule); -webkit-text-stroke: 1.5px var(--marigold); }
+[data-theme='night'] .post-item { display: grid; grid-template-columns: 1fr 9.5rem; gap: 1.8rem; align-items: start; padding-block: 0.6rem 2.2rem; }
+[data-theme='night'] .post-item:not(:has(.thumb)) { grid-template-columns: 1fr; }
+[data-theme='night'] .post-item .thumb { display: block; order: 2; }
+[data-theme='night'] .post-item .thumb img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; background: var(--surface); }
+[data-theme='night'] .post-item .post-text { order: 1; }
+[data-theme='night'] .post-item h3 { font-size: 1.4rem; }
+[data-theme='night'] .tag-cloud a, [data-theme='night'] .share a, [data-theme='night'] .share button, [data-theme='night'] .author-box { background: var(--surface); border-color: var(--rule); color: var(--ink); }
+[data-theme='night'] .prose code { background: var(--surface); }
+[data-theme='night'] .prose pre { background: var(--surface) !important; }
+[data-theme='night'] .prose blockquote { border-left-color: var(--marigold); }
+[data-theme='night'] .score.good { background: #1f3b2a; color: #a8e0b8; }
+[data-theme='night'] .score.ok { background: #3b2f12; color: #f2c66d; }
+[data-theme='night'] .score.poor { background: #3d1f1b; color: #f2a89b; }
+[data-theme='night'] .skip { background: var(--marigold); color: #12151c; }
+
+/* ---------- shared responsive rules for the themes ---------- */
+@media (max-width: 960px) {
+  [data-theme='magazine'] .post-groups { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  [data-theme='magazine'] .post-groups { grid-template-columns: 1fr; }
+  [data-theme='magazine'] .featured > div { padding: 1.4rem; }
+  [data-theme='journal'] .post-item { grid-template-columns: 6.5rem 1fr; gap: 1rem; }
+  [data-theme='journal'] .post-item p { display: none; }
+  [data-theme='night'] .post-item { grid-template-columns: 1fr 6rem; gap: 1rem; }
+}
+
+/* fixes */
+[data-theme='night'] .intro p + p { font-size: var(--s0); line-height: 1.6; max-width: 50ch; }
+[data-theme='night'] .year-group { grid-template-columns: 8rem 1fr; }
+[data-theme='night'] .year { font-size: 2.9rem; letter-spacing: -0.03em; }
+@media (max-width: 760px) {
+  [data-theme='magazine'] .featured { grid-template-columns: 1fr; }
+  [data-theme='magazine'] .featured img { height: auto; }
+}

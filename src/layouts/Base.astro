@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/themes.css';
 import SEO from '../components/SEO.astro';
 import settings from '../data/settings.json';
 
@@ -36,7 +37,7 @@ const links = [
 ---
 
 <!doctype html>
-<html lang={settings.language}>
+<html lang={settings.language} data-theme={(settings as any).theme || 'classic'}>
   <head>
     <SEO {...props} jsonLd={[...(path === '/' ? [websiteLd] : []), ...(props.jsonLd || [])]} />
     <slot name="head" />
