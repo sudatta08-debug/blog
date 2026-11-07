@@ -1,0 +1,29 @@
+<!-- Paste this right after <head> in Blogger: Theme > Customise (down arrow) > Edit HTML -->
+<script>
+//<![CDATA[
+(function () {
+  var site = "https://sudatta-blog.netlify.app";
+  var map = {
+  "/2022/05/cuisines-of-lagos-nigeria.html": "/blog/cuisines-of-lagos-nigeria/",
+  "/2022/05/amazon-signing-bonus.html": "/blog/amazon-signing-bonus/",
+  "/2022/05/defence-of-poesy-review.html": "/blog/defence-of-poesy-review/",
+  "/2022/05/how-to-transform-business-business.html": "/blog/how-to-transform-business/",
+  "/2022/05/remote-work-trends.html": "/blog/remote-work-trends/",
+  "/2022/05/financial-impact-of-covid.html": "/blog/financial-impact-of-covid/",
+  "/2022/10/singapore-travel.html": "/blog/singapore-travel/",
+  "/2023/06/crowdfunding-in-india.html": "/blog/crowdfunding-in-india/",
+  "/2025/03/top-ai-writing-tools-for-content.html": "/blog/top-ai-writing-tools-for-content/"
+};
+  var p = location.pathname, target = map[p];
+  var labels = {"How To Transform Business": "money-business", "Business Management": "money-business", "Financial Impact of Covid": "money-business", "singapore": "travel-food", "singapore airport": "travel-food", "things to do in singapore": "travel-food", "singapore tourism": "travel-food", "travel to singapore": "travel-food", "restaurants in singapore": "travel-food", "singapore travel": "travel-food", "singapore food": "travel-food", "flights to singapore": "travel-food", "marina bay sands singapore": "travel-food", "Crowdfunding in India": "money-business", "fundraising for medical treatment in India": "money-business", "crowdfunding platforms in india for startups": "money-business", "crowdfunding platforms in India": "money-business", "donation-based crowdfunding in India": "money-business", "fundraising in India": "money-business", "remote working": "work-careers", "remote work": "work-careers", "covid19": "work-careers", "AI Writing Tools": "writing-ai", "Artificial Intelligence": "writing-ai", "AI Writing": "writing-ai", "NIgerian cuisine": "travel-food", "Nigerian food": "travel-food"};
+  if (!target && p.indexOf('/search/label/') === 0) target = '/tags/' + (labels[decodeURIComponent(p.split('/').pop())] ? labels[decodeURIComponent(p.split('/').pop())] + '/' : '');
+  if (!target && p === '/p/about.html') target = '/about/';
+  if (!target && p === '/p/contact.html') target = '/about/';
+  if (!target && (p === '/' || p === '')) target = '/';
+  if (target) {
+    var l = document.createElement('link'); l.rel = 'canonical'; l.href = site + target; document.head.appendChild(l);
+    location.replace(site + target);
+  }
+})();
+//]]>
+</script>

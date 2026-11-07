@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME   # <-- change this after you create the repo
+  repo: sudatta08-debug/blog   # GitHub username/repository name
   branch: main
   commit_messages:
     create: 'New post: {{slug}}'

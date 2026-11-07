@@ -41,14 +41,8 @@ A fast, free blog with an admin panel and built-in SEO tools.
 2. Click **+ → New repository**. Name it, for example, `blog`. Keep it **Public** or **Private** (both work). Click **Create repository**.
 3. On the next page click **uploading an existing file**, drag in everything from this folder (not the folder itself, its contents), and click **Commit changes**.
 
-### 2. Tell the admin panel where your repository is
-In GitHub, open `public/admin/config.yml`, click the pencil icon, and change this line to your username and repository name:
-
-```yaml
-repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME
-```
-
-Commit the change.
+### 2. Admin panel repository
+Already set to `sudatta08-debug/blog` in `public/admin/config.yml`. If you named your repository something other than `blog`, open that file on GitHub, click the pencil icon, change the `repo:` line to match, and commit.
 
 ### 3. Publish on Netlify
 1. Sign up at [netlify.com](https://www.netlify.com) using **Sign up with GitHub**.
@@ -69,18 +63,20 @@ That's it. Every time you press **Publish** in the admin, Netlify rebuilds the s
 
 ---
 
-## Moving your Blogspot posts
+## Moving your Blogspot and WordPress posts
 
 1. In Blogger: **Settings → Manage blog → Back up content → Download**. You get an `.xml` file.
-2. Either send that file to Claude to run the import for you, or run it yourself (needs [Node.js 22+](https://nodejs.org)):
+2. In WordPress: **Tools → Export → Export all**. You get a `.zip`; unzip it to get the `.xml` inside.
+3. Either send both files to Claude to run the import for you, or run it yourself (needs [Node.js 22+](https://nodejs.org)):
    ```bash
    npm install
-   npm run import:blogger -- path/to/blog-backup.xml --download-images
+   npm run import -- blogger-backup.xml wordpress-export.xml --download-images
    ```
-   Options: `--download-images` copies images into the site (recommended, so they don't depend on Blogger), `--include-drafts` imports drafts too, `--overwrite` replaces posts already imported.
-3. Upload the new files in `src/content/posts/`, `public/uploads/blogger/` and `public/_redirects` to GitHub.
-4. **Send old readers and Google to the new site.** Open `blogger-redirect-snippet.html` (created by the import). In Blogger go to **Theme → (down arrow next to Customise) → Edit HTML**, paste the snippet right after `<head>`, and save. Anyone opening an old blogspot.com post now lands on the same post here.
-5. **Keep the Blogspot blog online.** Don't delete it; the redirects only work while it exists.
+   Posts that exist on both sites are merged into one: the earliest publish date, the longest version of the text and all topics from both copies are kept.
+   Options: `--download-images` copies images into the site (recommended, so they don't depend on the old sites), `--include-drafts` imports drafts too, `--overwrite` replaces posts already imported.
+4. Upload the new files in `src/content/posts/`, `public/uploads/imported/` and `public/_redirects` to GitHub.
+5. **Send old readers and Google to the new site.** Open `blogger-redirect-snippet.html` (created by the import). In Blogger go to **Theme → (down arrow next to Customise) → Edit HTML**, paste the snippet right after `<head>`, and save. Anyone opening an old blogspot.com post now lands on the same post here.
+6. **Keep the Blogspot blog online.** Don't delete it; the redirects only work while it exists.
 
 Blogger comments are not imported.
 

@@ -5,7 +5,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "import:blogger": "node scripts/import-blogger.mjs"
+    "import": "node scripts/import.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
