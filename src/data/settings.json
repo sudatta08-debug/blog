@@ -1,0 +1,21 @@
+{
+  "siteTitle": "Sudatta Das",
+  "tagline": "Stories and guides on business, money, travel and writing",
+  "siteDescription": "Articles by Sudatta Das, a writer and content manager, on business, money, careers, travel, food, literature and AI writing tools.",
+  "siteUrl": "https://sudatta-blog.netlify.app",
+  "authorName": "Sudatta Das",
+  "authorBio": "Writer and content manager with a Master's in English Literature. I write about business, money, work, travel, food and the craft of writing.",
+  "language": "en-IN",
+  "locale": "en_IN",
+  "defaultOgImage": "/og-default.png",
+  "postsPerPage": 10,
+  "googleSiteVerification": "gT74fDH4i36qP8HehLT_NiMhkVN5PkEzKYqW36WGGk0",
+  "bingSiteVerification": "",
+  "googleAnalyticsId": "",
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/sudatta-das-74861b77",
+    "twitter": "",
+    "instagram": "",
+    "email": "sudatta08@gmail.com"
+  }
+}
